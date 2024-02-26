@@ -70,7 +70,15 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git docker-compose docker github nmap rust suse vagrant zsh-navigation-tools zsh-interactive-cd zsh-autosuggestions vagrant tmux toolbox systemd python screen pyenv history gnu-utils fzf docker-compose aws ansible composer pip pipenv n98-magerun)
+plugins=(git 
+	docker-compose
+	poetry
+	docker github nmap rust suse vagrant zsh-navigation-tools zsh-interactive-cd 
+	zsh-autosuggestions vagrant tmux toolbox systemd python screen pyenv history 
+	gnu-utils fzf docker-compose aws ansible composer pip pipenv zsh-cargo-completion
+	zsh-ssh
+	ssh
+	zsh-autocomplete)
 
 source $ZSH/oh-my-zsh.sh
 # Bindkey '^X' create_completion
@@ -150,4 +158,8 @@ unset __conda_setup
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+alias clean="zypper packages --unneeded | awk -F'|' 'NR==0 || NR==1 || NR==2 || NR==3 || NR==4 {next} {print $3}' | grep -v Name | sudo xargs zypper remove --clean-deps"
 
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform
+eval "$(zoxide init zsh)"
